@@ -7,12 +7,17 @@ const loginPage = require('../pageobjects/login.page.js');
 const inputPage = require('../pageobjects/input.js');
 const dropdownPage = require('../pageobjects/dropdown.js');
 const login = require('../pageobjects/login.js')
+const tablePage = require('../pageobjects/table.js')
+const fetchData = require('../pageobjects/fetchdataTable.js')
 
 
 const pages = {
     login: login,
     input: inputPage,
-    dropdown: dropdownPage
+    dropdown: dropdownPage,
+    table: tablePage,
+    datatable: fetchData
+
 }
 
 Given(/^I am on the (\w+) page$/, async (page) => {
@@ -82,4 +87,17 @@ Then (/^I take screenshot$/, async() =>{
 
 Then (/^I set date$/, async() =>{
     await loginPage.datePicker();
+})
+
+Then(/^Inventory page should list the (\w+)$/, async(NoOfProducts) =>{
+    await tablePage.iterateTable(NoOfProducts);
+})
+
+Then(/^Validate all products have valid price$/, async() =>{
+    await tablePage.getPrice();
+})
+
+
+Then(/^validate the table cell value$/, async() =>{
+    await fetchData.noOfRows();
 })
